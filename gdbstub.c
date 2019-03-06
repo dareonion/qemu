@@ -658,7 +658,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
             if (cc->gdb_arch_name) {
                 gchar *arch = cc->gdb_arch_name(cpu);
                 pstrcat(target_xml, sizeof(target_xml), "<architecture>");
-                pstrcat(target_xml, sizeof(target_xml), arch);
+                pstrcat(target_xml, sizeof(target_xml), "i8086");
                 pstrcat(target_xml, sizeof(target_xml), "</architecture>");
                 g_free(arch);
             }
@@ -1343,6 +1343,7 @@ static int gdb_handle_packet(GDBState *s, const char *line_buf)
         if (is_query_packet(p, "Supported", ':')) {
             snprintf(buf, sizeof(buf), "PacketSize=%x", MAX_PACKET_LENGTH);
             cc = CPU_GET_CLASS(first_cpu);
+
             if (cc->gdb_core_xml_file != NULL) {
                 pstrcat(buf, sizeof(buf), ";qXfer:features:read+");
             }
