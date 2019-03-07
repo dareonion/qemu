@@ -3114,7 +3114,7 @@ int cpu_memory_rw_debug(CPUState *cpu, target_ulong addr,
         if (!(flags & PAGE_VALID))
             return -1;
         if (is_write) {
-            if (!(flags & PAGE_WRITE))
+            if (!(flags & (PAGE_WRITE | PAGE_WRITE_ORG)))
                 return -1;
             /* XXX: this code should not depend on lock_user */
             if (!(p = lock_user(VERIFY_WRITE, addr, l, 0)))

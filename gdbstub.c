@@ -707,7 +707,13 @@ static int gdb_read_register(CPUState *cpu, uint8_t *mem_buf, int reg)
             return r->get_reg(env, mem_buf, reg - r->base_reg);
         }
     }
+#ifdef TARGET_X86_64
+    return 8;
+#elif TARGET_I386
+    return 4;
+#else
     return 0;
+#endif
 }
 
 static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
